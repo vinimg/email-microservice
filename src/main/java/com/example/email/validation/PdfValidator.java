@@ -21,10 +21,13 @@ public class PdfValidator {
             throw new IllegalArgumentException("pdfBase64 não pode estar vazio");
         }
 
+        // Limpar espaços em branco e quebras de linha que podem vir em Base64
+        String cleaned = base64Pdf.replaceAll("\\s", "");
+
         // Validar Base64
         byte[] pdfBytes;
         try {
-            pdfBytes = Base64.getDecoder().decode(base64Pdf);
+            pdfBytes = Base64.getDecoder().decode(cleaned);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("pdfBase64 inválido: não é um Base64 válido", e);
         }
